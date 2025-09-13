@@ -9,10 +9,6 @@ const commands = [
     {
         name: 'courses',
         description: 'Fetch and display your Canvas courses',
-    },
-    {
-        name: 'duesoon',
-        description: 'Fetch and display assignments due this week',
     }
 ];
 
