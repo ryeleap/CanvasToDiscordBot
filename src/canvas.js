@@ -54,12 +54,14 @@ async function getActiveAssignments() {
 
         const assignments = await assignResp.json();
 
+        //check if due this week
         const dueThisWeek = assignments.filter(a => {
             if (!a.due_at) return false;
             const dueDate = new Date(a.due_at);
             return dueDate >= now && dueDate <= weekFromNow;
         });
 
+        //if so, push
         dueThisWeek.forEach(a => {
             assignmentsDue.push({
                 course: course.name,
@@ -72,4 +74,5 @@ async function getActiveAssignments() {
     return assignmentsDue;
 }
 
-module.exports = { getActiveCourses, getActiveAssignments };
+//export to index.js
+module.exports = { getActiveCourses, getActiveAssignments, getCurrentGrades };

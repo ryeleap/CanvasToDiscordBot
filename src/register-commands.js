@@ -3,12 +3,17 @@ const { REST, Routes } = require('discord.js');
 
 const commands = [
     {
-        name: 'assignments',
-        description: 'Fetch and display your Canvas assignments',
-    },
-    {
         name: 'courses',
         description: 'Fetch and display your Canvas courses',
+    },
+    {
+        name: 'assignments',
+        description: 'Fetch and display your Canvas assignments due this week',
+    },
+    //Not implemented yet
+    {
+        name: 'grades',
+        description: 'Fetch and display your current Canvas grades',
     }
 ];
 
