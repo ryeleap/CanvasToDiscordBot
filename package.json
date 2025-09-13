@@ -1,0 +1,27 @@
+{
+  "name": "canvasdiscordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryeleap/CanvasToDiscordBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryeleap/CanvasToDiscordBot/issues"
+  },
+  "homepage": "https://github.com/ryeleap/CanvasToDiscordBot#readme",
+  "dependencies": {
+    "@discordjs/rest": "^2.6.0",
+    "discord-api-types": "^0.38.24",
+    "discord.js": "^14.22.1",
+    "dotenv": "^17.2.2",
+    "node-fetch": "^3.3.2"
+  }
+}
