@@ -74,5 +74,47 @@ async function getActiveAssignments() {
     return assignmentsDue;
 }
 
+
+async function getCurrentGrades() {
+    const profileResp = await fetch(`${canvasApiUrl}/users/self/profile`, {
+        headers: { Authorization: `Bearer ${canvasApiToken}` }
+    });
+
+    const { id: myUserId } = await profileResp.json();
+
+    const courseResp = await fetch(`${canvasApiUrl}/courses?enrollment_state=active`, {
+        headers: { Authorization: `Bearer ${canvasApiToken}` },
+    });
+
+    const courses = await courseResp.json();
+    const grades = [];
+
+    for (const course of courses) {
+        const enrollResp = await fetch(
+            `${canvasApiUrl}/courses/${course.id}/enrollments?user_id=self&include[]=total_scores`, {
+            headers: { Authorization: `Bearer ${canvasApiToken}` }
+        }
+        );
+
+        if (!enrollResp.ok) {
+            console.warn(`Failed to fetch enrollments for course ${course.id}`);
+            continue;
+        }
+
+        const enrollments = await enrollResp.json();
+        const myEnrollment = enrollments.find(e => e.user_id === myUserId);
+
+        if (myEnrollment?.grades) {
+            grades.push({
+                course: course.name,
+                current_grade: myEnrollment.grades.current_grade || "N/A",
+                current_score: myEnrollment.grades.current_score ?? "N/A",
+            });
+        }
+    }
+
+    return grades;
+}
+
 //export to index.js
 module.exports = { getActiveCourses, getActiveAssignments, getCurrentGrades };

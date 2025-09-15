@@ -1,4 +1,4 @@
-const { getActiveCourses, getActiveAssignments } = require("./canvas");
+const { getActiveCourses, getActiveAssignments, getCurrentGrades } = require("./canvas");
 
 async function handleActiveCoursesCommand(interaction) {
     try {
@@ -35,4 +35,25 @@ async function handleAssignmentsCommand(interaction) {
     }
 }
 
-module.exports = { handleActiveCoursesCommand, handleAssignmentsCommand };
+async function handleCurrGradesCommand(interaction) {
+    try {
+        await interaction.deferReply();
+
+        const grades = await getCurrentGrades();
+
+        if (grades.length === 0) {
+            await interaction.editReply("No grade data available yet.");
+        } else {
+            const list = grades
+                .map(g => `${g.course}: **${g.current_grade || "N/A"}** (${g.current_score ?? "N/A"}%)`)
+                .join("\n");
+            await interaction.editReply(`Your current grades:\n${list}`);
+        }
+    } catch (err) {
+        console.error(err);
+        await interaction.editReply("Couldn't fetch grades.");
+    }
+}
+
+
+module.exports = { handleActiveCoursesCommand, handleAssignmentsCommand, handleCurrGradesCommand };

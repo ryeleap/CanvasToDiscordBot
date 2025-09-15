@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { handleAssignmentsCommand, handleActiveCoursesCommand } = require("./commands");
+const { handleAssignmentsCommand, handleActiveCoursesCommand, handleCurrGradesCommand } = require("./commands");
 
 //refs are here https://discordjs.guide/creating-your-bot/main-file.html#running-your-application
 const { Client, GatewayIntentBits } = require('discord.js');
@@ -18,8 +18,8 @@ client.on('interactionCreate', async interaction => {
         else if (interaction.commandName === 'courses') {
             await handleActiveCoursesCommand(interaction);
         }
-        else if (interaction.commandName === 'duesoon') {
-            await interaction.reply('Due Soon command received!');
+        else if (interaction.commandName === 'grades') {
+            await handleCurrGradesCommand(interaction);
         }
     }
 })
